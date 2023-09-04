@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"baseUrl": "./",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"paths": {
+			"@constants*": ["./constants*"],
+			"@controllers*": ["./controllers*"],
+			"@routes*": ["./routes*"],
+			"@services*": ["./services*"],
+			"@services":["./services*"],
+            "@utils*": ["./utils*"]
+		}
+	},
+	"exclude": ["node_modules", "@shelf/jest-mongodb"]
+}
