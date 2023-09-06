@@ -1,5 +1,6 @@
 'use strict'
 const elasticsearchUtils = require('@utils/elasticsearch')
+const { sessionSearchQueryBuilder } = require('@helpers/sessionSearchQueryBuilder')
 
 exports.getSessionById = async (sessionId) => {
 	try {
@@ -11,7 +12,10 @@ exports.getSessionById = async (sessionId) => {
 
 exports.getSessions = async (filters) => {
 	try {
-		return await elasticsearchUtils.searchDocuments(process.env.ELASTIC_SESSION_INDEX, filters)
+		console.log(filters)
+		const sessionSearchQuery = await sessionSearchQueryBuilder(filters)
+		console.log(JSON.stringify(sessionSearchQuery, null, 3))
+		return await elasticsearchUtils.searchDocuments(process.env.ELASTIC_SESSION_INDEX, sessionSearchQuery)
 	} catch (err) {
 		console.log(err)
 	}

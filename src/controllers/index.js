@@ -38,7 +38,7 @@ exports.getSession = async (req, res) => {
 
 exports.searchSessions = async (req, res) => {
 	try {
-		const filters = req.filters
+		const filters = req.body.filters
 		const sessions = await searchService.getSessions(filters)
 		await res.status(200).send(sessions.hits.hits)
 	} catch (err) {
