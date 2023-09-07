@@ -3,9 +3,9 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.5.2
     environment:
-      - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-      - "xpack.security.enabled=false"
+      - 'discovery.type=single-node'
+      - 'ES_JAVA_OPTS=-Xms1g -Xmx1g'
+      - 'xpack.security.enabled=false'
     ports:
       - 9200:9200
       - 9300:9300
@@ -21,7 +21,7 @@ services:
       - ./src/:/var/src
     ports:
       - '3009:3009'
-    command: [ 'nodemon', 'app.js' ]
+    command: ['nodemon', 'app.js']
     networks:
       - c4gt_mentoring_catalog_net
 networks:

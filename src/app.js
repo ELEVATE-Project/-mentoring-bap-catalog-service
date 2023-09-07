@@ -13,8 +13,8 @@ app.use(cors())
 app.use(process.env.ROOT_ROUTE, require('@routes'))
 
 app.get('/', (req, res) => {
-    res.send('Hello, World!'); // You can replace this with any response you want
-  });
+	res.send('Hello, World!') // You can replace this with any response you want
+})
 
 app.listen(process.env.APPLICATION_PORT, (res, err) => {
 	if (err) onError(err)
