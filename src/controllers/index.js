@@ -1,30 +1,26 @@
 'use strict'
 const searchService = require('@services/search')
+const indexingService = require('@services/indexing')
 
-exports.search = async (req, res) => {
+exports.indexSession = async (req, res) => {
 	try {
-		console.debug(JSON.stringify(req.body, null, '\t'))
-		const catalog = await searchService.search(req.body)
-		await res.status(200).send({ catalog })
+		const indexingResponse = await indexingService.indexSession({
+			sessionId: req.body.sessionId,
+			sessionDoc: req.body.session,
+		})
+		await res.status(200).send({ ...indexingResponse })
 	} catch (err) {
 		console.log(err)
 	}
 }
 
-exports.index = async (req, res) => {
+exports.indexRawSession = async (req, res) => {
 	try {
-		console.debug(JSON.stringify(req.body, null, '\t'))
-		const catalog = await searchService.search(req.body)
-		await res.status(200).send({ catalog })
-	} catch (err) {
-		console.log(err)
-	}
-}
-
-exports.getFulfillment = async (req, res) => {
-	try {
-		const fulfillment = await searchService.getFulfillment(fulfillmentId)
-		await res.status(200).send({ fulfillment })
+		const indexingResponse = await indexingService.indexRawSession({
+			sessionId: req.body.sessionId,
+			sessionDoc: req.body.session,
+		})
+		await res.status(200).send({ ...indexingResponse })
 	} catch (err) {
 		console.log(err)
 	}
@@ -33,21 +29,18 @@ exports.getFulfillment = async (req, res) => {
 exports.getSession = async (req, res) => {
 	try {
 		const sessionId = req.params.sessionId
-		const getAllProtocolObjects = req.query.getAllComponents === 'true' ? true : false
-		const session = await searchService.getSession(sessionId, getAllProtocolObjects)
-		await res.status(200).send({ session })
+		const session = await searchService.getSessionById(sessionId)
+		await res.status(200).send(session)
 	} catch (err) {
 		console.log(err)
 	}
 }
 
-exports.getStatusBody = async (req, res) => {
+exports.searchSessions = async (req, res) => {
 	try {
-		const sessionId = req.params.sessionId
-		const fulfillmentId = req.params.fulfillmentId
-		if (!fulfillmentId || !sessionId) return res.status(400).send({ message: 'Missing Parameters' })
-		let statusBody = await searchService.getStatusBody(sessionId, fulfillmentId)
-		await res.status(200).send({ statusBody })
+		const filters = req.body.filters
+		const sessions = await searchService.getSessions(filters)
+		await res.status(200).send(sessions.hits.hits)
 	} catch (err) {
 		console.log(err)
 	}

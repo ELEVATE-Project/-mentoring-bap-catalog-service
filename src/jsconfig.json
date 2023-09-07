@@ -10,8 +10,10 @@
 			"@controllers*": ["./controllers*"],
 			"@routes*": ["./routes*"],
 			"@services*": ["./services*"],
-			"@services":["./services*"],
-            "@utils*": ["./utils*"]
+			"@services": ["./services*"],
+			"@utils*": ["./utils*"],
+            "@configs*": ["./configs*"],
+            "@helpers*": ["./helpers*"]
 		}
 	},
 	"exclude": ["node_modules", "@shelf/jest-mongodb"]
